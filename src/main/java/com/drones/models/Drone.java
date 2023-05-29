@@ -2,22 +2,29 @@ package com.drones.models;
 
 import com.drones.enums.Model;
 import com.drones.enums.State;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Entity
-@Table
+@Table(name= "drones")
+@Data
 public class Drone {
-    private long id;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Size(min = 1, max = 100)
     private String serialNumber;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Model model;
-    private double weight;
-
+    @Min(1)
+    @Max(500)
+    private double weightLimit;
+    @Min(0)
+    @Max(100)
     private int batteryCapacity;
-
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private State state;
 }
